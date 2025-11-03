@@ -16,7 +16,7 @@ document.getElementById('commentForm').addEventListener('submit', function(event
     .then(response => response.json())
     .then(data => {
         document.getElementById('message').innerText = data.message;
-        if (data.status == 'success') {
+        if (data.status = 'success') {
             document.getElementById('commentForm').reset();
         }
     })
@@ -25,4 +25,5 @@ document.getElementById('commentForm').addEventListener('submit', function(event
         document.getElementById('message').innerText = 'Terjadi kesalahan saat mengirim komentar.';
     });
 });
+
 
