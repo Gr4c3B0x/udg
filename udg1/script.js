@@ -1,31 +1,36 @@
-document.getElementById('commentForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Mencegah form melakukan submit standar
+document.getElementById('dataForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Mencegah submit formulir default
 
-    const formData = new FormData(event.target);
-    const jsonData = Object.fromEntries(formData.entries());
-    const jsonString = JSON.stringify(jsonData);
+    // Mengambil data formulir
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    // Mengubah FormData menjadi objek JavaScript biasa
+    const dataObject = Object.fromEntries(formData.entries());
 
-    // Kirim data ke skrip PHP menggunakan Fetch API
-    fetch('save_comment.php', {
+    // Mengubah objek menjadi string JSON
+    const jsonData = JSON.stringify(dataObject);
+
+    // Kirim data ke server (backend)
+    fetch('save_data.php', { // Ganti save_data.php dengan URL endpoint backend Anda
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json' // Memberi tahu server bahwa body adalah JSON
+            'Content-Type': 'application/json'
         },
-        body: jsonString
+        body: jsonData
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('message').innerText = data.message;
-        if (data.status === 'success') {
-            document.getElementById('commentForm').reset();
+        const messageElement = document.getElementById('message');
+        if (data.success) {
+            messageElement.textContent = `✅ Data berhasil disimpan! File: ${data.filename}`;
+            form.reset(); // Kosongkan formulir
+        } else {
+            messageElement.textContent = `❌ Gagal menyimpan data: ${data.message}`;
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        document.getElementById('message').innerText = 'Terjadi kesalahan saat mengirim komentar.';
+        document.getElementById('message').textContent = '❌ Terjadi kesalahan saat mengirim data.';
     });
 });
-
-
-
-
