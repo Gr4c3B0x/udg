@@ -1,27 +1,44 @@
 <?php
 header('Content-Type: application/json');
 
-$input = file_get_contents('php://input');
-$data = json_decode($input, true);
+// 1. Baca data JSON yang dikirimkan dari frontend
+$json_data = file_get_contents('php://input');
+$data = json_decode($json_data, true);
 
-if ($data) {
-    $file = 'comments.json';
-    $current_comments = file_exists($file) ? json_decode(file_get_contents($file), true) : [];
-
-    // Tambahkan komentar baru dengan timestamp
-    $new_comment = [
-        'username' => htmlspecialchars($data['username']),
-        'comment' => htmlspecialchars($data['comment']),
-        'timestamp' => date('Y-m-d H:i:s')
-    ];
-
-    $current_comments[] = $new_comment;
-
-    // Simpan kembali ke file JSON dengan format yang rapi
-    file_put_contents($file, json_encode($current_comments, JSON_PRETTY_PRINT));
-
-    echo json_encode(['status' => 'success', 'message' => 'Komentar berhasil disimpan!']);
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'Data tidak valid.']);
+// Cek jika data berhasil di-decode
+if ($data === null) {
+    echo json_encode(['success' => false, 'message' => 'Invalid JSON data.']);
+    exit;
 }
+
+// Tentukan nama file
+$filename = 'data_inputan.json';
+
+// 2. Ambil data yang sudah ada dari file (jika ada)
+$existing_data = [];
+if (file_exists($filename)) {
+    $file_content = file_get_contents($filename);
+    $existing_data = json_decode($file_content, true);
+    // Jika data tidak valid atau file kosong, inisialisasi sebagai array kosong
+    if (!is_array($existing_data)) {
+        $existing_data = [];
+    }
+}
+
+// 3. Tambahkan data baru ke array data yang sudah ada
+$existing_data[] = $data;
+
+// 4. Encode kembali array data menjadi string JSON
+// JSON_PRETTY_PRINT (opsional) untuk format yang rapi
+$final_json = json_encode($existing_data, JSON_PRETTY_PRINT);
+
+// 5. Simpan string JSON ke file
+if (file_put_contents($filename, $final_json) !== false) {
+    // Beri respons sukses ke frontend
+    echo json_encode(['success' => true, 'message' => 'Data saved successfully!', 'filename' => $filename]);
+} else {
+    // Beri respons gagal
+    echo json_encode(['success' => false, 'message' => 'Failed to write data to file. Check file permissions.']);
+}
+
 ?>
