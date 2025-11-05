@@ -17,8 +17,28 @@
         <button type="submit">Simpan Data</button>
     </form>
     <p id="message"></p>
+    <div id="data-output"></div>
 
+    <script>
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                const outputDiv = document.getElementById('data-output');
+                data.forEach(user => {
+                    const userElement = `
+                        <div>
+                            <h2>${user.nama}</h2>
+                            <p>Usia: ${user.usia}</p>
+                        </div>
+                    `;
+                    outputDiv.innerHTML += userElement;
+                });
+            })
+            .catch(error => console.error('Terjadi kesalahan:', error));
+    </script>
+    
     <script src="app.js"></script>
 </body>
 </html>
+
 
