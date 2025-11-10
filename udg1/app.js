@@ -35,21 +35,6 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
         document.getElementById('message').textContent = '❌ Terjadi kesalahan saat mengirim data.';
     });
 });
-fetch('data.json')
-            .then(response => response.json())
-            .then(data => {
-                const outputDiv = document.getElementById('data-output');
-                data.forEach(user => {
-                    const userElement = `
-                        <div>
-                            <h2>${user.nama}</h2>
-                            <p>Komentar: ${user.komen}</p>
-                        </div>
-                    `;
-                    outputDiv.innerHTML += userElement;
-                });
-            })
-            .catch(error => console.error('Terjadi kesalahan tampil:', error));
 
 
 
