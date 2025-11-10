@@ -12,7 +12,7 @@ if ($data === null) {
 }
 
 // Tentukan nama file
-$filename = 'data_inputan.json';
+$filename = 'data.json';
 
 // 2. Ambil data yang sudah ada dari file (jika ada)
 $existing_data = [];
@@ -42,3 +42,4 @@ if (file_put_contents($filename, $final_json) !== false) {
 }
 
 ?>
+
