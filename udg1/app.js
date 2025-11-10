@@ -24,7 +24,24 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
         const messageElement = document.getElementById('message');
         if (data.success) {
             messageElement.textContent = `✅ Data berhasil disimpan! File: ${data.filename}`;
-            form.reset(); // Kosongkan formulir
+            form.reset(); // Kosongkan formulir awaaaaaalllllllll
+
+             fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                const outputDiv = document.getElementById('data-output');
+                data.forEach(user => {
+                    const userElement = `
+                        <div>
+                            <h2>${user.nama}</h2>
+                            <p>Usia: ${user.komen}</p>
+                        </div>
+                    `;
+                    outputDiv.innerHTML += userElement;
+                });
+            })
+            .catch(error => console.error('Terjadi kesalahan tampil:', error));
+            //akhir
         } else {
             messageElement.textContent = `❌ Gagal menyimpan data: ${data.message}`;
         }
@@ -34,3 +51,4 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
         document.getElementById('message').textContent = '❌ Terjadi kesalahan saat mengirim data.';
     });
 });
+
