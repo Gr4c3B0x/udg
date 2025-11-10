@@ -34,7 +34,8 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
         console.error('Error:', error);
         document.getElementById('message').textContent = '❌ Terjadi kesalahan saat mengirim data.';
     });
-    fetch('data.json')
+});
+fetch('data.json')
             .then(response => response.json())
             .then(data => {
                 const outputDiv = document.getElementById('data-output');
@@ -49,6 +50,6 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
                 });
             })
             .catch(error => console.error('Terjadi kesalahan tampil:', error));
-});
+
 
 
