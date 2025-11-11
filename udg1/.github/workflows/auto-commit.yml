@@ -13,10 +13,10 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/checkout@v2
       with:
-        repository: mazipan/auto-commit-action # Gunakan action dari marketplace
+        repository: udg/auto-commit-action # Gunakan action dari marketplace
         path: ./auto-commit-action # Jalankan action di folder terpisah
     - id: auto_commit
-      uses: mazipan/auto-commit-action@v1 # Ganti dengan action yang Anda pilih atau buat skrip sendiri
+      uses: udg/auto-commit-action@v1 # Ganti dengan action yang Anda pilih atau buat skrip sendiri
       with:
         commit_message: "Auto commit at $(date +'%Y-%m-%d %H:%M:%S')"
         path: .
