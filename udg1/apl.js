@@ -1,4 +1,4 @@
-const form = document.getElementById('myForm');
+const form = document.getElementById('dataForm');
         const responseMessage = document.getElementById('responseMessage');
 
         form.addEventListener('submit', function(e) {
