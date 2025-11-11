@@ -1,1 +1,22 @@
-fd
+name: Auto Commit and Push
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Jadwal, misal: setiap jam. Ganti dengan jadwal yang Anda inginkan (lihat cron.guru)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@v2
+      with:
+        repository: udg/auto-commit-action # Gunakan action dari marketplace
+        path: ./auto-commit-action # Jalankan action di folder terpisah
+    - id: auto_commit
+      uses: udg/auto-commit-action@v1 # Ganti dengan action yang Anda pilih atau buat skrip sendiri
+      with:
+        commit_message: "Auto commit at $(date +'%Y-%m-%d %H:%M:%S')"
+        path: .
