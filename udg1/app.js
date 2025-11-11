@@ -25,7 +25,6 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
         if (data.success) {
             messageElement.textContent = `✅ Data berhasil disimpan! File: ${data.filename}`;
             form.reset(); // Kosongkan formulir awaaaaaalllllllll
-            //akhir
         } else {
             messageElement.textContent = `❌ Gagal menyimpan data: ${data.message}`;
         }
@@ -35,6 +34,7 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
         document.getElementById('message').textContent = '❌ Terjadi kesalahan saat mengirim data.';
     });
 });
+
 
 
 
