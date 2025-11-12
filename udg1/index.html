@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Input Data Pengguna</h1>
-    <form id="dataForm" action="https://script.google.com/macros/s/AKfycbz6FuKXbPLPRLIONZVS_3R2SSMEXX5TNDNZ-yQ_FQa6JAXMcco4V6nD752K4-UW3tRx_w/exec" method="POST">
+    <form id="dataForm">
         <label for="nama">Nama:</label>
         <input type="text" id="nama" name="nama" required><br><br>
 
@@ -37,9 +37,23 @@
             .catch(error => console.error('Terjadi kesalahan tampil:', error));
 </script>
     <script src="app.js"></script-->
-    <script src="apl.js"></script>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz6FuKXbPLPRLIONZVS_3R2SSMEXX5TNDNZ-yQ_FQa6JAXMcco4V6nD752K4-UW3tRx_w/exec'
+        const form = document.forms['dataForm']
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => console.log('Success!', response))
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+    
+    <!--script src="apl.js"></script-->
 </body>
 </html>
+
 
 
 
